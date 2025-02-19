@@ -87,11 +87,45 @@ For an ideal LC circuit (no resistance), the damping ratio (\(\xi = 0\)) indicat
 \xi = \frac{R}{2} \sqrt{\frac{C}{L}}.
 \]
 
+\subsection{Theoretical Calculations for Given Values}
+Given:
+\begin{itemize}
+	\item Capacitance, \(C = 1 \, \text{nF} = 1 \times 10^{-9} \, \text{F}\),
+	\item Inductance, \(L = 2.2 \, \text{mH} = 2.2 \times 10^{-3} \, \text{H}\),
+	\item Internal resistance of the inductor, \(R = 25.2 \, \Omega\).
+\end{itemize}
+
+\subsubsection{Natural Frequency (\(\Omega_n\))}
+\[
+\Omega_n = \frac{1}{\sqrt{LC}} = \frac{1}{\sqrt{(2.2 \times 10^{-3}) (1 \times 10^{-9})}}.
+\]
+Simplifying:
+\[
+\Omega_n = \frac{1}{\sqrt{2.2 \times 10^{-12}}} = \frac{1}{1.483 \times 10^{-6}}} \approx 6.74 \times 10^5 \, \text{rad/s}.
+\]
+
+\subsubsection{Damping Ratio (\(\xi\))}
+\[
+\xi = \frac{R}{2} \sqrt{\frac{C}{L}} = \frac{25.2}{2} \sqrt{\frac{1 \times 10^{-9}}{2.2 \times 10^{-3}}}.
+\]
+Simplifying:
+\[
+\xi = 12.6 \sqrt{\frac{10^{-9}}{2.2 \times 10^{-3}}} = 12.6 \sqrt{4.545 \times 10^{-7}}}.
+\]
+Further simplification:
+\[
+\xi = 12.6 \times 6.74 \times 10^{-4} \approx 0.0085.
+\]
+
+Since \(\xi \approx 0.0085\), which is much less than 1, the circuit is \textbf{underdamped}, and oscillations will decay over time.
+
+---
+
 The transient response of the LC circuit can be classified based on the value of \(\xi\):
 \begin{enumerate}
-	\item \textbf{Underdamped (\(0 < \xi < 1\)):} Oscillations decay over time.
-	\item \textbf{Critically damped (\(\xi = 1\)):} Fastest return to equilibrium without oscillation.
-	\item \textbf{Overdamped (\(\xi > 1\)):} Slow return to equilibrium without oscillation.
+\item \textbf{Underdamped (\(0 < \xi < 1\)):} Oscillations decay over time.
+\item \textbf{Critically damped (\(\xi = 1\)):} Fastest return to equilibrium without oscillation.
+\item \textbf{Overdamped (\(\xi > 1\)):} Slow return to equilibrium without oscillation.
 \end{enumerate}
 
 The voltage across the capacitor during oscillations can be expressed as:
@@ -100,9 +134,9 @@ V_C(t) = V_0 e^{-\xi \Omega_n t} \cos(\Omega_d t + \phi),
 \]
 where:
 \begin{itemize}
-	\item \(V_0\) is the initial voltage,
-	\item \(\Omega_d = \Omega_n \sqrt{1 - \xi^2}\) is the damped natural frequency,
-	\item \(\phi\) is the phase angle.
+\item \(V_0\) is the initial voltage,
+\item \(\Omega_d = \Omega_n \sqrt{1 - \xi^2}\) is the damped natural frequency,
+\item \(\phi\) is the phase angle.
 \end{itemize}
 
 \begin{figure}[!ht]
