@@ -1,0 +1,437 @@
+\let\negmedspace\undefined
+\let\negthickspace\undefined
+\documentclass[journal]{IEEEtran}
+\usepackage[a5paper, margin=10mm, onecolumn]{geometry}
+%\usepackage{lmodern} % Ensure lmodern is loaded for pdflatex
+% \usepackage{tfrupee} % Include tfrupee package
+
+\setlength{\headheight}{1cm} % Set the height of the header box
+\setlength{\headsep}{0mm}     % Set the distance between the header box and the top of the text
+
+\usepackage{gvv-book}
+\usepackage{gvv}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{txfonts}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{mathtools}
+\usepackage{gensymb}
+\usepackage{comment}
+\usepackage[breaklinks=true]{hyperref}
+\usepackage{tkz-euclide} 
+\usepackage{listings}
+% \usepackage{gvv}                                        
+\def\inputGnumericTable{}                                 
+\usepackage[latin1]{inputenc}                                
+\usepackage{color}                                            
+\usepackage{array}                                            
+\usepackage{longtable}                
+\usepackage{calc}                                             
+\usepackage{multirow}                                         
+\usepackage{hhline}                                           
+\usepackage{ifthen}                             
+\usepackage{caption}              
+\usepackage{lscape}
+\usepackage{subcaption}
+\usepackage{circuitikz}
+\captionsetup{compatibility=false}
+% \captionsetup{compactibility=false}
+% \usepackage{algpseudocode}
+\begin{document}
+
+\bibliographystyle{IEEEtran}
+\vspace{3cm}
+
+\title{Experiment 5} 
+\author{S A Aravind Eswar and Eshan Sharma}
+{\let\newpage\relax\maketitle}
+
+\section{Aim}
+Op-Amp Applications:
+\begin{enumerate}
+	\item Custom Weighted Summing and Difference Amplifier
+	\item Op-Amp Integrator
+	\item Precision Rectifier(Super Diode)
+\end{enumerate}
+
+\section{Materials and Apparatus Required}
+
+\begin{enumerate}
+	\item Op-Amp (e.g., LM386, LM58)
+	\item Resistors(Carefully selected for weighting)
+	\item Capacitors
+	\item Diode(e.g., 1N4148)
+	\item Function Generator
+	\item DC Power Supply
+	\item Oscilloscope
+\end{enumerate}
+
+\section{Theory}
+	\subsection{Op-Amp Integrator}
+	
+	\subsection*{Circuit Description}
+	The basic configuration of an op-amp integrator consists of:
+	\begin{itemize}
+		\item An operational amplifier.
+		\item A resistor (\(R_{\text{in}}\)) connected to the inverting input.
+		\item A capacitor (\(C\)) connected between the output and the inverting input.
+		\item The non-inverting input is grounded.
+	\end{itemize}
+	
+	The circuit diagram is shown below:
+	\begin{figure}[!ht]
+		\centering
+		\resizebox{0.6\textwidth}{!}{%
+			\begin{circuitikz}
+				\tikzstyle{every node}=[font=\normalsize]
+				\draw (6.25,14) to[R] (7.75,14);
+				\draw (9,15.5) to[C] (11,15.5);
+				\draw (10,13.5) node[op amp,scale=1, yscale=-1 ] (opamp2) {};
+				\draw (opamp2.+) to[short] (8.5,14);
+				\draw  (opamp2.-) to[short] (8.5,13);
+				\draw (11.2,13.5) to[short](11.5,13.5);
+				\draw (7.75,14) to[short] (8.5,14);
+				\draw (8.5,14) to[short] (8.5,15.5);
+				\draw (8.5,15.5) to[short] (9,15.5);
+				\draw (11,15.5) to[short] (11.5,15.5);
+				\draw (11.5,15.5) to[short] (11.5,13.5);
+				\draw (11.5,13.5) to[short] (12.75,13.5);
+				\draw (8.5,13) to[short] (8.5,12.5);
+				\draw (5.5,14) to[short] (6.25,14);
+				\draw (8.5,12.5) to (8.5,12.25) node[ground]{};
+				\draw (5.5,13.25) to (5.5,12.75) node[ground]{};
+				\draw (12.75,12.75) to (12.75,12.25) node[ground]{};
+				\node at (8.5,14) [circ] {};
+				\node at (11.5,13.5) [circ] {};
+				\node at (5.5,14) [circ] {};
+				\node at (5.5,13.25) [circ] {};
+				\node at (12.75,13.5) [circ] {};
+				\node at (12.75,12.75) [circ] {};
+				\node [font=\normalsize] at (8.25,14.25) {X};
+				\node [font=\normalsize] at (10.25,16) {C          };
+				\node [font=\normalsize] at (6.75,14.5) {$R_{in}$};
+				\node [font=\normalsize] at (13.25,13.25) {$-V_{out}$};
+				\node [font=\normalsize] at (5,13.75) {$V_{in}$};
+				\node [font=\normalsize] at (9.75,13.5) {A};
+				\draw [->, >=Stealth] (5.5,14) -- (6.25,14);
+				\draw [->, >=Stealth] (8.5,15.5) -- (9.25,15.5);
+				\node [font=\normalsize] at (5.5,14.25) {$I_{in}$};
+			\end{circuitikz}
+		}%
+		\label{fig:my_label}
+	\end{figure}
+	
+	\subsection*{Operation of the Integrator Circuit}
+	The operation of the integrator is based on the virtual ground principle at the inverting input of the op-amp. Assuming an ideal op-amp:
+	\begin{enumerate}
+		\item The input current through \(R_{\text{in}}\) is given by:
+		\[
+		I_{\text{in}} = \frac{V_{\text{in}}}{R_{\text{in}}}.
+		\]
+		\item Since no current flows into the op-amp's inverting terminal, this current flows through the capacitor, causing it to charge or discharge.
+		\item The voltage across the capacitor (\(V_C\)) is related to the charge (\(Q\)) by:
+		\[
+		Q = C V_C.
+		\]
+		The current through the capacitor is:
+		\[
+		I_C = C \frac{\mathrm{d}V_C}{\mathrm{d}t}.
+		\]
+	\end{enumerate}
+	
+	Equating \(I_{\text{in}}\) and \(I_C\), we have:
+	\[
+	\frac{V_{\text{in}}}{R_{\text{in}}} = C \frac{\mathrm{d}V_{\text{out}}}{\mathrm{d}t}.
+	\]
+	
+	Rearranging and integrating both sides with respect to time gives:
+	\[
+	V_{\text{out}} = -\frac{1}{R_{\text{in}}C} \int V_{\text{in}} \, \mathrm{d}t,
+	\]
+	where the negative sign indicates that the output is inverted.
+	
+	Thus, the output voltage (\(V_{\text{out}}\)) is proportional to the time integral of the input voltage (\(V_{\text{in}}\)).
+
+	\subsection{Half and Full-Wave Rectifiers}
+	
+	\subsection*{Half-Wave Precision Rectifier}
+	
+	The half-wave precision rectifier allows only one half of the input AC signal (positive or negative) to pass through while blocking the other half. This is achieved using an op-amp and a diode configured such that the op-amp compensates for the diode's forward voltage drop.
+	
+	\subsubsection*{Circuit Description}
+	\begin{enumerate}
+		\item An operational amplifier (e.g., LM358).
+		\item A diode (e.g., 1N4148) connected in feedback.
+		\item Resistors to set the input and feedback paths.
+	\end{enumerate}
+	
+	\begin{figure}[!ht]
+		\centering
+		\resizebox{0.6\textwidth}{!}{%
+			\begin{circuitikz}
+				\tikzstyle{every node}=[font=\normalsize]
+				\draw (5.75,13.5) to[R] (7.25,13.5);
+				\draw (9,15.5) to[R] (11.25,15.5);
+				\draw (9,14.75) to[D] (11.25,14.75);
+				\draw (11.25,13) to[D] (13,13);
+				\draw (13.75,13) to[R] (13.75,11.25);
+				\draw (7.25,13.5) to[short] (8.25,13.5);
+				\draw (8.25,12.5) to[short] (8.25,11.75);
+				\draw (8,13.5) to[short] (8,15.5);
+				\draw (8,15.5) to[short] (9,15.5);
+				\draw (8,14.75) to[short] (9,14.75);
+				\draw (11.25,14.75) to[short] (11.25,13);
+				\draw (11.25,15.5) to[short] (12.75,15.5);
+				\draw (12.75,15.5) to[short] (12.75,13);
+				\draw (13,13) to[short] (13.75,13);
+				\draw (5,13.5) to[short] (6,13.5);
+				\draw (5,12.5) to[short] (5.75,12.5);
+				\draw (5.75,12.5) to[short] (5.75,11.75);
+				\draw (5.75,11.75) to (5.75,11.5) node[ground]{};
+				\draw (8.25,11.75) to (8.25,11.5) node[ground]{};
+				\draw (13.75,11.25) to (13.75,11) node[ground]{};
+				\node at (8,13.5) [circ] {};
+				\node at (8,14.75) [circ] {};
+				\node at (8,15.5) [circ] {};
+				\node at (11.25,14.75) [circ] {};
+				\node at (11.25,13) [circ] {};
+				\node at (12.75,13) [circ] {};
+				\node at (5,13.5) [circ] {};
+				\node at (5,12.5) [circ] {};
+				\draw (9.75,13) node[op amp,scale=1, yscale=-1 ] (opamp2) {};
+				\draw (opamp2.+) to[short] (8.25,13.5);
+				\draw  (opamp2.-) to[short] (8.25,12.5);
+				\draw (10.95,13) to[short](11.25,13);
+				\node [font=\normalsize] at (6.5,14) {9.1K};
+				\node [font=\normalsize] at (10.25,16) {9.1K};
+				\node [font=\normalsize] at (14.25,12.25) {1K};
+				\node [font=\normalsize] at (4.5,13) {$V_{in}$};
+				\node [font=\normalsize] at (14.25,13.25) {$V_{out}$};
+			\end{circuitikz}
+		}%
+		
+		\label{fig:my_label}
+	\end{figure}
+	
+	\subsubsection*{Working Principle}
+	When the input signal (\(V_{\text{in}}\)) is positive, the op-amp output drives the diode into conduction, and the output (\(V_{\text{out}}\)) follows \(V_{\text{in}}\). When \(V_{\text{in}}\) is negative, the diode becomes reverse-biased, blocking current flow, and \(V_{\text{out}}\) remains at zero.
+	
+	Mathematically:
+	\[
+	V_{\text{out}} = 
+	\begin{cases} 
+		V_{\text{in}}, & V_{\text{in}} > 0, \\
+		0, & V_{\text{in}} \leq 0.
+	\end{cases}
+	\]
+	
+	This results in a rectified waveform where only the positive half-cycles are present at the output.
+	
+	\subsection*{Full-Wave Precision Rectifier}
+	
+	The full-wave precision rectifier allows both halves of the input AC signal to be rectified, producing a unipolar output. This is achieved by combining a half-wave rectifier with a summing amplifier.
+	
+	\subsubsection*{Circuit Description}
+	\begin{enumerate}
+		\item A half-wave precision rectifier circuit.
+		\item A summing amplifier to combine signals from both positive and negative cycles.
+		\item Additional diodes and resistors for proper signal routing.
+	\end{enumerate}
+	
+	\begin{figure}[!ht]
+		\centering
+		\resizebox{0.7\textwidth}{!}{%
+			\begin{circuitikz}
+				\tikzstyle{every node}=[font=\normalsize]
+				\draw (6.25,13.5) to[R] (7.75,13.5);
+				\draw (9,15.5) to[R] (11.25,15.5);
+				\draw (11.25,14.75) to[D] (9,14.75);
+				\draw (13,13) to[D] (11.25,13);
+				\draw (8,13.5) to[short] (8,15.5);
+				\draw (8,15.5) to[short] (9,15.5);
+				\draw (8,14.75) to[short] (9,14.75);
+				\draw (11.25,14.75) to[short] (11.25,13);
+				\draw (11.25,15.5) to[short] (12.75,15.5);
+				\draw (12.75,15.5) to[short] (12.75,13);
+				\draw (5,12.5) to[short] (5.75,12.5);
+				\draw (5.75,12.5) to[short] (5.75,11.75);
+				\draw (5.75,11.75) to (5.75,11.5) node[ground]{};
+				\draw (8.25,12.5) to (8.25,12.25) node[ground]{};
+				\node at (8,13.5) [circ] {};
+				\node at (8,14.75) [circ] {};
+				\node at (8,15.5) [circ] {};
+				\node at (11.25,14.75) [circ] {};
+				\node at (11.25,13) [circ] {};
+				\node at (12.75,13) [circ] {};
+				\node at (5,13.5) [circ] {};
+				\node at (5,12.5) [circ] {};
+				\draw (9.75,13) node[op amp,scale=1, yscale=-1 ] (opamp2) {};
+				\draw (opamp2.+) to[short] (8.25,13.5);
+				\draw  (opamp2.-) to[short] (8.25,12.5);
+				\draw (10.95,13) to[short](11.25,13);
+				\node [font=\normalsize] at (4.5,13) {$V_{in}$};
+				\node [font=\normalsize] at (18.75,10) {$V_{out}$};
+				\draw (9,11) to[R] (11,11);
+				\draw (13,13) to[R] (14.5,13);
+				\draw (7.75,13.5) to[short] (8.5,13.5);
+				\draw (5,13.5) to[short] (6.25,13.5);
+				\draw (16.25,10.5) node[op amp,scale=1, yscale=-1 ] (opamp2) {};
+				\draw (opamp2.+) to[short] (14.75,11);
+				\draw  (opamp2.-) to[short] (14.75,10);
+				\draw (17.45,10.5) to[short](17.75,10.5);
+				\draw (6.25,13.5) to[short] (6.25,11);
+				\draw (6.25,11) to[short] (9,11);
+				\draw (11,11) to[short] (14.75,11);
+				\draw (14.5,13) to[short] (14.5,11);
+				\draw (15,12.25) to[R] (17.25,12.25);
+				\draw (15,12.25) to[short] (15,11);
+				\draw (17.25,12.25) to[short] (17.25,10.5);
+				\draw (14.75,10) to (14.75,9) node[ground]{};
+				\draw (17.75,10.5) to[short] (18.75,10.5);
+				\draw (17.75,9.5) to[short] (18.75,9.5);
+				\draw (17.75,9.5) to (17.75,9) node[ground]{};
+				\node at (14.5,11) [circ] {};
+				\node at (15,11) [circ] {};
+				\node at (17.25,10.5) [circ] {};
+				\node at (18.75,10.5) [circ] {};
+				\node at (18.75,9.5) [circ] {};
+				\node [font=\normalsize] at (7,14) {6.8K};
+				\node [font=\normalsize] at (10.25,16) {6.8K};
+				\node [font=\normalsize] at (13.5,13.5) {3.4K};
+				\node [font=\normalsize] at (16.25,12.75) {6.8K};
+				\node [font=\normalsize] at (10,10.5) {6.8K};
+			\end{circuitikz}
+		}%
+		\label{fig:my_label}
+	\end{figure}
+	
+	\subsubsection*{Working Principle}
+	\begin{enumerate}
+	\item During the positive half-cycle of \(V_{\text{in}}\), the first op-amp operates as a half-wave rectifier, passing the positive signal to the summing amplifier.
+	\item During the negative half-cycle of \(V_{\text{in}}\), another path inverts and shifts the signal such that it also appears as a positive contribution at the summing amplifier input.
+	
+	The summing amplifier combines these contributions to produce a continuous positive output for both halves of the input signal.
+	
+	Mathematically:
+	For an input sinusoidal signal \(V_{\text{in}} = V_m \sin(\omega t)\),
+	the output voltage is:
+	\[
+	V_{\text{out}} = |V_{\text{in}}| = V_m |\sin(\omega t)|.
+	\]
+	
+	This results in a fully rectified waveform at the output.
+	 \end{enumerate}
+
+\section{Procedure}
+	\subsection{Op-Amp Integrator}
+	
+\begin{enumerate}
+	\item Set Up the Circuit:
+\begin{itemize}
+	\item Connect the circuit as per the integrator circuit diagram.
+	\item Use a resistor (\(R_{\text{in}}\)) at the input and a capacitor (\(C_f\)) in the feedback loop of the op-amp.
+	\item Ground the non-inverting terminal of the op-amp.
+	\item Connect the power supply to the op-amp (\(+V_{cc}\) and \(-V_{cc}\)).
+\end{itemize}
+
+\item Apply Input Signal:
+\begin{itemize}
+	\item Connect a function generator to provide a square wave input signal to the circuit.
+	\item Set the input signal to \(2 \, \text{V}_{pp}\) amplitude and \(1 \, \text{kHz}\) frequency.
+\end{itemize}
+
+\item Observe Output Waveform:
+\begin{itemize}
+	\item Connect the input and output signals to two channels of a CRO.
+	\item Set the CRO to AC coupling mode.
+	\item Observe and record both input and output waveforms simultaneously.
+\end{itemize}
+
+\item Analyze Output Waveform:
+\begin{itemize}
+	\item For a square wave input, verify that the output is a triangular waveform.
+	\item Note down the amplitude and time period of both input and output signals.
+\end{itemize}
+
+\end{enumerate}
+
+	\subsection{Precision Rectifiers}
+	
+	\begin{enumerate}
+		\item Set Up the Circuit:
+		\begin{itemize}
+			\item Connect the circuit as per the precision rectifier circuit diagram.
+			\item For the half-wave rectifier:
+			\begin{itemize}
+				\item Use an op-amp with a diode in the feedback loop and a resistor at the input.
+				\item Ground the non-inverting terminal of the op-amp.
+			\end{itemize}
+			\item For the full-wave rectifier:
+			\begin{itemize}
+				\item Combine two op-amps: one for inverting and rectifying the negative half-cycle and another for summing both positive and inverted signals.
+				\item Use appropriate diodes and resistors for signal routing.
+			\end{itemize}
+			\item Connect the power supply to the op-amp (\(+V_{cc}\) and \(-V_{cc}\)).
+		\end{itemize}
+		
+		\item Apply Input Signal:
+		\begin{itemize}
+			\item Connect a function generator to provide a sine wave input signal to the circuit.
+			\item Set the input signal to \(2 \, \text{V}_{pp}\) amplitude and \(1 \, \text{kHz}\) frequency.
+		\end{itemize}
+		
+		\item Observe Output Waveform:
+		\begin{itemize}
+			\item Connect the input and output signals to two channels of a CRO.
+			\item Set the CRO to AC coupling mode.
+			\item Observe and record both input and output waveforms simultaneously.
+		\end{itemize}
+		
+		\item Analyze Output Waveform:
+		\begin{itemize}
+			\item For the half-wave rectifier:
+			\begin{itemize}
+				\item Verify that only one half (positive or negative) of the sine wave is present at the output while the other half is blocked.
+				\item Note down the amplitude and time period of both input and output signals.
+			\end{itemize}
+			\item For the full-wave rectifier:
+			\begin{itemize}
+				\item Verify that both halves of the sine wave are rectified, resulting in a unipolar output waveform.
+				\item Note down the amplitude and time period of both input and output signals.
+			\end{itemize}
+		\end{itemize}
+	\end{enumerate}
+\section{Observations}
+	\subsection{Op-Amp Integrator}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\columnwidth]{pics/int_1452.jpeg}
+		\caption{Op-Amp Integrator with input 1452 Hz}
+	\end{figure}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\columnwidth]{pics/int_1708.jpeg}
+		\caption{Op-Amp Integrator with input 1708 Hz}
+	\end{figure}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.5\columnwidth]{pics/int_6049.jpeg}
+		\caption{Op-Amp Integrator with input 6049 Hz}
+	\end{figure}
+
+\section{Precautions}
+
+\begin{enumerate}
+	\item Make sure not to accidentally discharge the capacitor
+	\item Make sure the DC generator is connected to ground properly
+	\item Use a push button for shorting the inductor and capacitor
+	\item Repeat the experiment multiple times to be sure of the reading as it is a sensitive measurement
+\end{enumerate}
+
+\end{document}
